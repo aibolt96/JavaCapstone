@@ -1,6 +1,8 @@
 package com.javaCapstone.mentalHealthApp.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.javaCapstone.mentalHealthApp.dto.emotionsDto;
+import com.javaCapstone.mentalHealthApp.dto.entriesDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,15 +19,24 @@ public class emotions {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long emotions_id;
+    private Long emotionsId;
 
     @Column(columnDefinition = "varchar")
     private String mood;
 
     @Column(columnDefinition = "text")
-    private Long moodReason;
+    private String moodReason;
 
     @ManyToOne
     @JsonBackReference
     private entries entries;
+
+    public emotions(emotionsDto emotionsDto) {
+        if (emotionsDto.getMood() != null){
+            this.mood = emotionsDto.getMood();
+        }
+        if (emotionsDto.getMoodReason() != null){
+            this.moodReason = emotionsDto.getMoodReason();
+        }
+    }
 }

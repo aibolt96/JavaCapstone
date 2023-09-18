@@ -2,6 +2,7 @@ package com.javaCapstone.mentalHealthApp.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.javaCapstone.mentalHealthApp.dto.entriesDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,16 +21,30 @@ public class entries {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long entries_id;
+    private Long entryId;
 
     @Column(columnDefinition = "text")
-    private Long journalEntry;
+    private String journalEntry;
 
     @Column(columnDefinition = "integer")
     private Integer dayRating;
 
     @Column(columnDefinition = "date")
     private Date date;
+
+    public Long getEntryId() {
+        return entryId;
+    }
+
+    // Getter for journalEntry
+    public String getJournalEntry() {
+        return journalEntry;
+    }
+
+    // Getter for dayRating
+    public Integer getDayRating() {
+        return dayRating;
+    }
 
     @ManyToOne
     @JsonBackReference
@@ -38,4 +53,13 @@ public class entries {
     @OneToMany(mappedBy = "entries", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonManagedReference
     private Set<emotions> emotionsSet = new HashSet<>();
+
+    public entries(entriesDto entriesDto) {
+        if (entriesDto.getJournalEntry() != null){
+            this.journalEntry = entriesDto.getJournalEntry();
+        }
+        if (entriesDto.getDayRating() != null){
+            this.dayRating = entriesDto.getDayRating();
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package com.javaCapstone.mentalHealthApp.entities;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.javaCapstone.mentalHealthApp.dto.userDto;
 import jakarta.persistence.*;
 
 import java.util.HashSet;
@@ -12,15 +13,15 @@ public class user {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long user_id;
+    private Long userId;
 
     @Column(unique = true)
     private String username;
     @Column
     private String password;
 
-    public user(Long user_id, String username, String password) {
-        this.user_id = user_id;
+    public user(Long userId, String username, String password) {
+        this.userId = userId;
         this.username = username;
         this.password = password;
     }
@@ -28,12 +29,12 @@ public class user {
     public user() {
     }
 
-    public Long getUser_id() {
-        return user_id;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(Long user_id) {
-        this.user_id = user_id;
+    public void setUser_id(Long userId) {
+        this.userId = userId;
     }
 
     public String getUsername() {
@@ -55,4 +56,13 @@ public class user {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = {CascadeType.MERGE, CascadeType.PERSIST})
     @JsonManagedReference
     private Set<entries> entriesSet = new HashSet<>();
+
+    public user(userDto userDto){
+        if (userDto.getUsername() != null){
+            this.username = userDto.getUsername();
+        }
+        if (userDto.getPassword() != null) {
+            this.password = userDto.getPassword();
+        }
+    }
 }
