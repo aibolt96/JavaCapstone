@@ -1,5 +1,6 @@
 package com.javaCapstone.mentalHealthApp.entities;
 
+import com.javaCapstone.mentalHealthApp.services.UserServiceImpl;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.javaCapstone.mentalHealthApp.dto.userDto;
 import jakarta.persistence.*;
