@@ -14,9 +14,6 @@ import java.util.Set;
 
 @Entity
 @Table(name = "Entries")
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class entries {
 
     @Id
@@ -32,18 +29,64 @@ public class entries {
     @Column(columnDefinition = "date")
     private Date date;
 
+    public entries() {
+    }
+
+    public entries(Long entryId, String journalEntry, Integer dayRating, Date date, com.javaCapstone.mentalHealthApp.entities.user user, Set<emotions> emotionsSet) {
+        this.entryId = entryId;
+        this.journalEntry = journalEntry;
+        this.dayRating = dayRating;
+        this.date = date;
+        this.user = user;
+        this.emotionsSet = emotionsSet;
+    }
+
     public Long getEntryId() {
         return entryId;
     }
 
-    // Getter for journalEntry
+    public void setEntryId(Long entryId) {
+        this.entryId = entryId;
+    }
+
     public String getJournalEntry() {
         return journalEntry;
     }
 
-    // Getter for dayRating
+    public void setJournalEntry(String journalEntry) {
+        this.journalEntry = journalEntry;
+    }
+
     public Integer getDayRating() {
         return dayRating;
+    }
+
+    public void setDayRating(Integer dayRating) {
+        this.dayRating = dayRating;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public com.javaCapstone.mentalHealthApp.entities.user getUser() {
+        return user;
+    }
+
+    public void setUser(com.javaCapstone.mentalHealthApp.entities.user user) {
+        this.user = user;
+    }
+
+    public Set<emotions> getEmotionsSet() {
+        return emotionsSet;
+    }
+
+    public void setEmotionsSet(Set<emotions> emotionsSet) {
+        this.emotionsSet = emotionsSet;
     }
 
     @ManyToOne

@@ -17,7 +17,7 @@ public class EmotionsServiceImpl implements EmotionsService {
     @Override
     @Transactional
     public void createEmotion(emotionsDto emotionsDto) {
-        emotions emotion = new Emotion();
+        emotions emotion = new emotions();
         emotion.setMood(emotionsDto.getMood());
         emotion.setReason(emotionsDto.getReason());
         emotionsRepository.saveAndFlush(emotion);

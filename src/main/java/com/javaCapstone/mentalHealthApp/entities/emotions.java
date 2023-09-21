@@ -12,9 +12,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "Emotion")
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
+
 public class emotions {
 
     @Id
@@ -26,6 +24,48 @@ public class emotions {
 
     @Column(columnDefinition = "text")
     private String moodReason;
+
+    public Long getEmotionsId() {
+        return emotionsId;
+    }
+
+    public void setEmotionsId(Long emotionsId) {
+        this.emotionsId = emotionsId;
+    }
+
+    public String getMood() {
+        return mood;
+    }
+
+    public emotions() {
+    }
+
+    public emotions(Long emotionsId, String mood, String moodReason, com.javaCapstone.mentalHealthApp.entities.entries entries) {
+        this.emotionsId = emotionsId;
+        this.mood = mood;
+        this.moodReason = moodReason;
+        this.entries = entries;
+    }
+
+    public void setMood(String mood) {
+        this.mood = mood;
+    }
+
+    public String getMoodReason() {
+        return moodReason;
+    }
+
+    public void setMoodReason(String moodReason) {
+        this.moodReason = moodReason;
+    }
+
+    public com.javaCapstone.mentalHealthApp.entities.entries getEntries() {
+        return entries;
+    }
+
+    public void setEntries(com.javaCapstone.mentalHealthApp.entities.entries entries) {
+        this.entries = entries;
+    }
 
     @ManyToOne
     @JsonBackReference

@@ -2,6 +2,7 @@ package com.javaCapstone.mentalHealthApp.services;
 
 import com.javaCapstone.mentalHealthApp.dto.emotionsDto;
 import com.javaCapstone.mentalHealthApp.dto.entriesDto;
+import com.javaCapstone.mentalHealthApp.entities.emotions;
 import com.javaCapstone.mentalHealthApp.entities.entries;
 import com.javaCapstone.mentalHealthApp.entities.user;
 import com.javaCapstone.mentalHealthApp.repositories.EntryRepository;
@@ -56,7 +57,7 @@ public class EntryServiceImpl implements EntryService {
         entryOptional.ifPresent(entry -> {
             entry.setDayRating(newDayRating);
 
-            Set<Emotion> emotions = emotionsDtoSet.stream()
+            Set<emotions> emotions = emotionsDtoSet.stream()
                     .map(Emotion::new)
                     .collect(Collectors.toSet());
 
@@ -66,7 +67,7 @@ public class EntryServiceImpl implements EntryService {
 
         if (!entryOptional.isPresent()) {
             Entry newEntry = new Entry();
-            newEntry.setEntryId(entryId); // Set the ID if needed
+            newEntry.setEntryId(entryId);
             newEntry.setDayRating(newDayRating);
             entryRepository.saveAndFlush(newEntry);
         }
