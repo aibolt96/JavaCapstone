@@ -14,6 +14,48 @@ public class entriesDto implements Serializable {
     private Integer dayRating;
     private Set<emotionsDto> emotionsDtoSet = new HashSet<>();
 
+    public Long getEntryId() {
+        return entryId;
+    }
+
+    public void setEntryId(Long entryId) {
+        this.entryId = entryId;
+    }
+
+    public String getJournalEntry() {
+        return journalEntry;
+    }
+
+    public void setJournalEntry(String journalEntry) {
+        this.journalEntry = journalEntry;
+    }
+
+    public entriesDto() {
+    }
+
+    public entriesDto(Long entryId, String journalEntry, Integer dayRating, Set<emotionsDto> emotionsDtoSet) {
+        this.entryId = entryId;
+        this.journalEntry = journalEntry;
+        this.dayRating = dayRating;
+        this.emotionsDtoSet = emotionsDtoSet;
+    }
+
+    public Integer getDayRating() {
+        return dayRating;
+    }
+
+    public void setDayRating(Integer dayRating) {
+        this.dayRating = dayRating;
+    }
+
+    public Set<emotionsDto> getEmotionsDtoSet() {
+        return emotionsDtoSet;
+    }
+
+    public void setEmotionsDtoSet(Set<emotionsDto> emotionsDtoSet) {
+        this.emotionsDtoSet = emotionsDtoSet;
+    }
+
     public entriesDto(entries entries) {
         if (entries.getEntryId() != null){
             this.entryId = entries.getEntryId();

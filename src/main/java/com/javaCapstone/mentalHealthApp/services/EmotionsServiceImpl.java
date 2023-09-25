@@ -19,7 +19,7 @@ public class EmotionsServiceImpl implements EmotionsService {
     public void createEmotion(emotionsDto emotionsDto) {
         emotions emotion = new emotions();
         emotion.setMood(emotionsDto.getMood());
-        emotion.setReason(emotionsDto.getReason());
+        emotion.setMoodReason(emotionsDto.getMoodReason());
         emotionsRepository.saveAndFlush(emotion);
     }
 
@@ -29,7 +29,7 @@ public class EmotionsServiceImpl implements EmotionsService {
         Optional<emotions> emotionOptional = emotionsRepository.findById(emotionId);
         emotionOptional.ifPresent(emotion -> {
             emotion.setMood(emotionsDto.getMood());
-            emotion.setReason(emotionsDto.getReason());
+            emotion.setMoodReason(emotionsDto.getMoodReason());
             emotionsRepository.saveAndFlush(emotion);
         });
     }
