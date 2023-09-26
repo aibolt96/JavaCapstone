@@ -1,5 +1,6 @@
 package com.javaCapstone.mentalHealthApp.services;
 
+
 import com.javaCapstone.mentalHealthApp.dto.emotionsDto;
 import com.javaCapstone.mentalHealthApp.dto.entriesDto;
 import com.javaCapstone.mentalHealthApp.entities.emotions;
@@ -25,13 +26,13 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     @Transactional
-    public void addEntry(entriesDto entryDto, Long userId){
+    public void addEntry(entriesDto entryDto, Set<emotionsDto> emotionsDtoSet, Long userId){
         Optional<user> userOptional = userRepository.findById(userId);
-        Entry entry = new Entry(entryDto);
+        entries entry = new entries(entryDto);
         userOptional.ifPresent(entry::setUser);
 
-        Set<Emotion> emotions = emotionsDtoSet.stream()
-                .map(Emotion::new)
+        Set<emotions> emotions = emotionsDtoSet.stream()
+                .map(emotionDto -> new emotions())
                 .collect(Collectors.toSet());
 
         entry.setEmotionsSet(emotions);
@@ -41,9 +42,9 @@ public class EntryServiceImpl implements EntryService {
     @Override
     @Transactional
     public void deleteEntryById(Long entryId){
-        Optional<entries> entryOptional = entryRepository.findById(entriesDto.getId());
+        Optional<entries> entryOptional = entryRepository.findById(entriesDto.getEntryId());
         entryOptional.ifPresent(entry -> {
-            entry.setBody(entriesDto.getBody());
+            entry.setJournalEntry(entriesDto.getJournalEntry());
 
             entry.getEmotionsSet().clear();
             entryRepository.delete(entry);
@@ -58,15 +59,15 @@ public class EntryServiceImpl implements EntryService {
             entry.setDayRating(newDayRating);
 
             Set<emotions> emotions = emotionsDtoSet.stream()
-                    .map(Emotion::new)
+                    .map(emotions::new)
                     .collect(Collectors.toSet());
 
             entry.setEmotionsSet(emotions);
             entryRepository.saveAndFlush(entry);
         });
 
-        if (!entryOptional.isPresent()) {
-            Entry newEntry = new Entry();
+        if (entryOptional.isEmpty()) {
+            entries newEntry = new entries();
             newEntry.setEntryId(entryId);
             newEntry.setDayRating(newDayRating);
             entryRepository.saveAndFlush(newEntry);

@@ -10,11 +10,11 @@ import java.util.Set;
 
 public class entriesDto implements Serializable {
     private Long entryId;
-    private String journalEntry;
+    private static String journalEntry;
     private Integer dayRating;
     private Set<emotionsDto> emotionsDtoSet = new HashSet<>();
 
-    public Long getEntryId() {
+    public static Long getEntryId() {
         return entryId;
     }
 
@@ -22,12 +22,12 @@ public class entriesDto implements Serializable {
         this.entryId = entryId;
     }
 
-    public String getJournalEntry() {
+    public static String getJournalEntry() {
         return journalEntry;
     }
 
     public void setJournalEntry(String journalEntry) {
-        this.journalEntry = journalEntry;
+        entriesDto.journalEntry = journalEntry;
     }
 
     public entriesDto() {
@@ -35,7 +35,7 @@ public class entriesDto implements Serializable {
 
     public entriesDto(Long entryId, String journalEntry, Integer dayRating, Set<emotionsDto> emotionsDtoSet) {
         this.entryId = entryId;
-        this.journalEntry = journalEntry;
+        entriesDto.journalEntry = journalEntry;
         this.dayRating = dayRating;
         this.emotionsDtoSet = emotionsDtoSet;
     }
@@ -61,7 +61,7 @@ public class entriesDto implements Serializable {
             this.entryId = entries.getEntryId();
         }
         if (entries.getJournalEntry() != null){
-            this.journalEntry = entries.getJournalEntry();
+            journalEntry = entries.getJournalEntry();
         }
         if (entries.getDayRating() != null){
             this.dayRating = entries.getDayRating();

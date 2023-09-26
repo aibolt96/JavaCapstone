@@ -9,8 +9,9 @@ import java.util.List;
 import java.util.Set;
 
 public interface EntryService {
+
     @Transactional
-    void addEntry(entriesDto entryDto, Long userId);
+    void addEntry(entriesDto entryDto, Set<emotionsDto> emotionsDtoSet, Long userId);
 
     @Transactional
     void deleteEntryById(Long entryId);
