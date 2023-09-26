@@ -24,6 +24,12 @@ public class EntryServiceImpl implements EntryService {
     @Autowired
     private UserRepository userRepository;
 
+
+    @Override
+    public void addEntry(entriesDto entryDto, Long userId) {
+
+    }
+
     @Override
     @Transactional
     public void addEntry(entriesDto entryDto, Set<emotionsDto> emotionsDtoSet, Long userId){
