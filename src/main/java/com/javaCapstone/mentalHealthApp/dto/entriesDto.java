@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class entriesDto implements Serializable {
-    private Long entryId;
+    private static Long entryId;
     private static String journalEntry;
     private Integer dayRating;
     private Set<emotionsDto> emotionsDtoSet = new HashSet<>();

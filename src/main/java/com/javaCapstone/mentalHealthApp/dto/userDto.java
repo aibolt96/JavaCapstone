@@ -9,9 +9,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class userDto implements Serializable {
     private Long userId;
     private String username;
