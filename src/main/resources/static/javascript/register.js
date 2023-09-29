@@ -6,7 +6,7 @@ const headers = {
     'Content-Type':'application/json'
 }
 
-const baseUrl = 'http://localhost:8080/api/v1/users'
+const baseUrl = 'http://localhost:8080'
 
 
 const handleSubmit = async (e) =>{
@@ -17,7 +17,7 @@ const handleSubmit = async (e) =>{
         password: registerPassword.value
     }
 
-    const response = await fetch(`${baseUrl}/register`, {
+    const response = await fetch(`${baseUrl}/api/v1/users/register`, {
         method: "POST",
         body: JSON.stringify(bodyObj),
         headers: headers

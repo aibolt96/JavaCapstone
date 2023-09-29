@@ -10,12 +10,18 @@
 </head>
 <body>
 <h1>Journaling App</h1>
+<div id="user-links">
+    <a href="register.html">Register</a> | <a href="login.html">Login</a>
+</div>
 
 <div id="entry-form">
     <h2>Add a New Entry</h2>
     <form id="journal-form">
         <label for="journal-entry"></label>
         <textarea id="journal-entry" placeholder="Write your journal entry here..."></textarea>
+        <br>
+        <label for="entry-rating">Rating (1-5):</label>
+        <input type="number" id="entry-rating" min="1" max="5" placeholder="Rate your day from 1 to 5">
         <br>
         <button type="submit">Save Entry</button>
     </form>
