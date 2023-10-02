@@ -27,21 +27,10 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     public void addEntry(entriesDto entryDto, Long userId) {
-
-    }
-
-    @Override
-    @Transactional
-    public void addEntry(entriesDto entryDto, Set<emotionsDto> emotionsDtoSet, Long userId){
         Optional<user> userOptional = userRepository.findById(userId);
         entries entry = new entries(entryDto);
         userOptional.ifPresent(entry::setUser);
 
-        Set<emotions> emotions = emotionsDtoSet.stream()
-                .map(emotionDto -> new emotions())
-                .collect(Collectors.toSet());
-
-        entry.setEmotionsSet(emotions);
         entryRepository.saveAndFlush(entry);
     }
 
@@ -84,5 +73,11 @@ public class EntryServiceImpl implements EntryService {
     @Transactional
     public List<entries> findEntriesByDayRating(Integer dayRating) {
         return entryRepository.findByDayRating(dayRating);
+    }
+
+    @Override
+    @Transactional
+    public List<entries> getAllEntries() {
+        return entryRepository.findAll();
     }
 }

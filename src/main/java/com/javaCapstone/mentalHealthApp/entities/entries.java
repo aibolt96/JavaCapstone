@@ -20,23 +20,23 @@ public class entries {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long entryId;
 
-    @Column(columnDefinition = "text")
+    @Column(name = "journal_entry", columnDefinition = "text")
     private String journalEntry;
 
-    @Column(columnDefinition = "integer")
+    @Column(name = "day_rating", columnDefinition = "integer")
     private Integer dayRating;
 
-    @Column(columnDefinition = "date")
-    private Date date;
+//    @Column(columnDefinition = "date")
+//    private Date date;
 
     public entries() {
     }
 
-    public entries(Long entryId, String journalEntry, Integer dayRating, Date date, com.javaCapstone.mentalHealthApp.entities.user user, Set<emotions> emotionsSet) {
+    public entries(Long entryId, String journalEntry, Integer dayRating, com.javaCapstone.mentalHealthApp.entities.user user, Set<emotions> emotionsSet) {
         this.entryId = entryId;
         this.journalEntry = journalEntry;
         this.dayRating = dayRating;
-        this.date = date;
+//        this.date = date;
         this.user = user;
         this.emotionsSet = emotionsSet;
     }
@@ -65,13 +65,13 @@ public class entries {
         this.dayRating = dayRating;
     }
 
-    public Date getDate() {
-        return date;
-    }
+//    public Date getDate() {
+//        return date;
+//    }
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
+//    public void setDate(Date date) {
+//        this.date = date;
+//    }
 
     public com.javaCapstone.mentalHealthApp.entities.user getUser() {
         return user;

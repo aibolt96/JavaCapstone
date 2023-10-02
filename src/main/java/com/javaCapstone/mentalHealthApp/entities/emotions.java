@@ -79,4 +79,7 @@ public class emotions {
             this.moodReason = emotionsDto.getMoodReason();
         }
     }
+
+    public void setEntry(com.javaCapstone.mentalHealthApp.entities.entries entry) {
+    }
 }

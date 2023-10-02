@@ -12,8 +12,6 @@ public interface EntryService {
     @Transactional
     void addEntry(entriesDto entryDto, Long userId);
 
-    @Transactional
-    void addEntry(entriesDto entryDto, Set<emotionsDto> emotionsDtoSet, Long userId);
 
     @Transactional
     void deleteEntryById(Long entryId);
@@ -23,4 +21,7 @@ public interface EntryService {
 
     @Transactional
     List<entries> findEntriesByDayRating(Integer dayRating);
+
+    @Transactional
+    List<entries> getAllEntries();
 }

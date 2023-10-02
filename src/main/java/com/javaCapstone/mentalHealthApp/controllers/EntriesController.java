@@ -38,4 +38,10 @@ public class EntriesController {
     public List<entries> findEntriesByDayRating(@RequestParam Integer dayRating) {
         return entryService.findEntriesByDayRating(dayRating);
     }
+
+    @PostMapping("/all")
+    public List<entries> getAllEntries() {
+        return entryService.getAllEntries();
+    }
+
 }

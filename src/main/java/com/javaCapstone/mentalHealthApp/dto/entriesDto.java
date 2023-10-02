@@ -12,14 +12,14 @@ public class entriesDto implements Serializable {
     private static Long entryId;
     private static String journalEntry;
     private Integer dayRating;
-    private Set<emotionsDto> emotionsDtoSet = new HashSet<>();
+
 
     public static Long getEntryId() {
         return entryId;
     }
 
     public void setEntryId(Long entryId) {
-        this.entryId = entryId;
+        entriesDto.entryId = entryId;
     }
 
     public static String getJournalEntry() {
@@ -34,10 +34,10 @@ public class entriesDto implements Serializable {
     }
 
     public entriesDto(Long entryId, String journalEntry, Integer dayRating, Set<emotionsDto> emotionsDtoSet) {
-        this.entryId = entryId;
+        entriesDto.entryId = entryId;
         entriesDto.journalEntry = journalEntry;
         this.dayRating = dayRating;
-        this.emotionsDtoSet = emotionsDtoSet;
+
     }
 
     public Integer getDayRating() {
@@ -48,17 +48,13 @@ public class entriesDto implements Serializable {
         this.dayRating = dayRating;
     }
 
-    public Set<emotionsDto> getEmotionsDtoSet() {
-        return emotionsDtoSet;
-    }
 
-    public void setEmotionsDtoSet(Set<emotionsDto> emotionsDtoSet) {
-        this.emotionsDtoSet = emotionsDtoSet;
-    }
+
+
 
     public entriesDto(entries entries) {
         if (entries.getEntryId() != null){
-            this.entryId = entries.getEntryId();
+            entryId = entries.getEntryId();
         }
         if (entries.getJournalEntry() != null){
             journalEntry = entries.getJournalEntry();
