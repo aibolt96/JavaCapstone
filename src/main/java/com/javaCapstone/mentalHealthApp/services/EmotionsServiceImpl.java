@@ -9,6 +9,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -43,25 +45,34 @@ public class EmotionsServiceImpl implements EmotionsService {
 
     @Override
     @Transactional
-    public void addEmotionsToEntry(Long entryId, Set<emotionsDto> emotionsDtoSet) {
+    public void addEmotionsToEntry(Long entryId,emotionsDto emotionsDto) {
         Optional<entries> entryOptional = entryRepository.findById(entryId);
-        if (entryOptional.isPresent()) {
-            entries entry = entryOptional.get();
+        emotions emotion = new emotions(emotionsDto);
+        entryOptional.ifPresent(emotion::setEntry);
+        emotionsRepository.saveAndFlush(emotion);
+    }
 
-            Set<emotions> emotionsSet = emotionsDtoSet.stream()
-                    .map(emotionsDto -> {
-                        emotions emotion = new emotions();
-                        emotion.setMood(emotionsDto.getMood());
-                        emotion.setMoodReason(emotionsDto.getMoodReason());
-                        emotion.setEntry(entry); // Associate the emotion with the entry
-                        return emotion;
-                    })
-                    .collect(Collectors.toSet());
+    public void addEmotionsToEntry(Set<emotionsDto> emotionsDtoSet) {
+    }
 
-            emotionsRepository.saveAll(emotionsSet);
+    public List<emotionsDto> getEmotions() {
+        // Retrieve emotions from the database or any other data source
+        List<emotions> emotions = emotionsRepository.findAll();
 
-            entry.getEmotionsSet().addAll(emotionsSet);
-            entryRepository.saveAndFlush(entry);
+        // Convert the list of Emotion entities to a list of emotionsDto
+        List<emotionsDto> emotionDtos = mapEmotionsToDtos(emotions);
+
+        return emotionDtos;
+    }
+
+    private List<emotionsDto> mapEmotionsToDtos(List<emotions> emotions) {
+        List<emotionsDto> emotionDtos = new ArrayList<>();
+        for (emotions emotion : emotions) {
+            emotionsDto dto = new emotionsDto();
+            dto.setMood(emotion.getMood());
+            dto.setMoodReason(emotion.getMoodReason());
+            emotionDtos.add(dto);
         }
+        return emotionDtos;
     }
 }

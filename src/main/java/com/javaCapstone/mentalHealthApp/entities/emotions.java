@@ -80,6 +80,6 @@ public class emotions {
         }
     }
 
-    public void setEntry(com.javaCapstone.mentalHealthApp.entities.entries entry) {
+    public void setEntry(entries entry) {
     }
 }

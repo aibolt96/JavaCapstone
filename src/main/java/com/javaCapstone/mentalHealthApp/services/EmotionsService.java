@@ -12,5 +12,8 @@ public interface EmotionsService {
     @Transactional
     void updateEmotion(Long emotionId, emotionsDto emotionsDto);
 
-    void addEmotionsToEntry(Long entryId, Set<emotionsDto> emotionsDtoSet);
+    @Transactional
+    void addEmotionsToEntry(Long entryId, emotionsDto emotionsDto);
+
+
 }

@@ -4,9 +4,10 @@ console.log(userId);
 const entryList = document.getElementById('entry-list');
 
 
-function createEntryCard(journalEntry, rating) {
+function createEntryCard(entryId, journalEntry, rating) {
     const card = document.createElement('div');
     card.classList.add('entry-card');
+    card.setAttribute('data-entry-id', entryId)
 
     const entryText = document.createElement('p');
     entryText.textContent = `Journal Entry: ${journalEntry}`;
@@ -14,8 +15,68 @@ function createEntryCard(journalEntry, rating) {
     const entryRating = document.createElement('p');
     entryRating.textContent = `Rating: ${rating}`;
 
+    const moodInput = document.createElement('input');
+    moodInput.type = 'text';
+    moodInput.placeholder = 'Mood';
+
+    const moodReasonInput = document.createElement('input');
+    moodReasonInput.type = 'text';
+    moodReasonInput.placeholder = 'Mood Reason';
+
+    const updateButton = document.createElement('button');
+    updateButton.textContent = 'Update';
+    updateButton.addEventListener('click', function () {
+        const mood = moodInput.value;
+        const moodReason = moodReasonInput.value;
+        const entryId = card.getAttribute('data-entry-id');
+
+        fetch(`/api/emotions/entries/${entryId}/emotions/add`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                emotionsDtoSet: [
+                    {
+                        mood: mood,
+                        moodReason: moodReason,
+                    },
+                ],
+            }),
+        })
+        .then((response) => {
+            if (response.ok) {
+                return response.json();
+            } else {
+                throw new Error('Failed to add emotions to the entry');
+            }
+        })
+        .then((data) => {
+
+            const moodText = document.createElement('p');
+            moodText.textContent = `Mood: ${mood}`;
+
+            const moodReasonText = document.createElement('p');
+            moodReasonText.textContent = `Mood Reason: ${moodReason}`;
+
+            card.appendChild(moodText);
+            card.appendChild(moodReasonText);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+            alert('An error occurred while adding emotions to the entry.');
+        });
+
+
+        moodInput.value = '';
+        moodReasonInput.value = '';
+    });
+
     card.appendChild(entryText);
     card.appendChild(entryRating);
+    card.appendChild(moodInput);
+    card.appendChild(moodReasonInput);
+    card.appendChild(updateButton);
 
     entryList.appendChild(card);
 }
@@ -56,11 +117,11 @@ journalForm.addEventListener('submit', function (e) {
 //             const savedRating = data.rating;
 
 
-            createEntryCard(journalEntry, rating);
+            createEntryCard(data.entryId, journalEntry, rating);
 
             
-//             document.getElementById('journal-entry').value = '';
-//             document.getElementById('entry-rating').value = '';
+            document.getElementById('journal-entry').value = '';
+            document.getElementById('entry-rating').value = '';
         })
         .catch((error) => {
             console.error('Error:', error);
