@@ -16,8 +16,9 @@ public class EntriesController {
     @Autowired
     private EntryServiceImpl entryService;
 
-    @PostMapping("/add")
-    public void addEntry(@RequestBody entriesDto entryDto, @RequestParam Long userId) {
+    @PostMapping("/add/{userId}")
+    public void addEntry(@RequestBody entriesDto entryDto, @PathVariable Long userId) {
+        System.out.println(entryDto);
         entryService.addEntry(entryDto, userId);
     }
 

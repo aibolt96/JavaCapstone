@@ -27,6 +27,7 @@ public class EntryServiceImpl implements EntryService {
 
     @Override
     public void addEntry(entriesDto entryDto, Long userId) {
+        System.out.println(entryDto);
         Optional<user> userOptional = userRepository.findById(userId);
         entries entry = new entries(entryDto);
         userOptional.ifPresent(entry::setUser);

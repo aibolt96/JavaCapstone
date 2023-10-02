@@ -34,7 +34,9 @@ const handleSubmit = async (e) => {
         const responseArr = await response.json();
 
         if (responseArr.length >= 2 && responseArr[0] === 'http://localhost:8080/home.html') {
-            window.location.replace(responseArr[0]);
+           document.cookie = `userId=${responseArr[1]}`
+           console.log(document.cookie)
+           window.location.replace(responseArr[0]);
         } else {
             alert('Username or password are incorrect.');
         }

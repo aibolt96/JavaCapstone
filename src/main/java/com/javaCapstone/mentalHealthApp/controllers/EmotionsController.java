@@ -29,7 +29,6 @@ public class EmotionsController {
 
     @PostMapping("/entries/{entryId}/emotions/add")
     public void addEmotionsToEntry(@PathVariable Long entryId, @RequestBody Set<emotionsDto> emotionsDtoSet) {
-        // Implement logic to add emotions to the specified entry
         emotionsService.addEmotionsToEntry(entryId, emotionsDtoSet);
     }
 }

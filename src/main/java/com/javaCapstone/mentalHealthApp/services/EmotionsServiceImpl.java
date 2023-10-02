@@ -44,12 +44,10 @@ public class EmotionsServiceImpl implements EmotionsService {
     @Override
     @Transactional
     public void addEmotionsToEntry(Long entryId, Set<emotionsDto> emotionsDtoSet) {
-        // Retrieve the entry from the database based on entryId
         Optional<entries> entryOptional = entryRepository.findById(entryId);
         if (entryOptional.isPresent()) {
             entries entry = entryOptional.get();
 
-            // Create Emotions entities from EmotionsDto and associate them with the entry
             Set<emotions> emotionsSet = emotionsDtoSet.stream()
                     .map(emotionsDto -> {
                         emotions emotion = new emotions();
@@ -60,12 +58,10 @@ public class EmotionsServiceImpl implements EmotionsService {
                     })
                     .collect(Collectors.toSet());
 
-            // Save the emotionsSet in the database
             emotionsRepository.saveAll(emotionsSet);
 
-            // Add the emotionsSet to the entry
             entry.getEmotionsSet().addAll(emotionsSet);
             entryRepository.saveAndFlush(entry);
-        } 
+        }
     }
 }

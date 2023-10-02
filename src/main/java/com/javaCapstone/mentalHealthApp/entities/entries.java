@@ -32,7 +32,7 @@ public class entries {
     public entries() {
     }
 
-    public entries(Long entryId, String journalEntry, Integer dayRating, com.javaCapstone.mentalHealthApp.entities.user user, Set<emotions> emotionsSet) {
+    public entries(Long entryId, String journalEntry, Integer dayRating, user user, Set<emotions> emotionsSet) {
         this.entryId = entryId;
         this.journalEntry = journalEntry;
         this.dayRating = dayRating;

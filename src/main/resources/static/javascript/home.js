@@ -1,10 +1,12 @@
-// Assuming you have a div element with the id "entry-list" to display journal entries
+const cookieArr = document.cookie.split("=")
+const userId = cookieArr[1]
+console.log(userId);
 const entryList = document.getElementById('entry-list');
 
-// Function to create a card for a journal entry
+
 function createEntryCard(journalEntry, rating) {
     const card = document.createElement('div');
-    card.classList.add('entry-card'); // You can define a CSS class for styling
+    card.classList.add('entry-card');
 
     const entryText = document.createElement('p');
     entryText.textContent = `Journal Entry: ${journalEntry}`;
@@ -18,7 +20,7 @@ function createEntryCard(journalEntry, rating) {
     entryList.appendChild(card);
 }
 
-// Event listener for form submission
+
 const journalForm = document.getElementById('journal-form');
 journalForm.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -29,37 +31,36 @@ journalForm.addEventListener('submit', function (e) {
     console.log("Journal Entry:", journalEntry);
     console.log("Rating:", rating);
 
-    // Check if both journal entry and rating are provided
+
     if (journalEntry.trim() === '' || rating.trim() === '') {
         alert('Please provide both a journal entry and a rating.');
         return;
     }
 
-    // Call your API to save the journal entry on the server
-    // Use the correct endpoint here ("/api/entries/add")
-    fetch('http://localhost:8080/api/entries/add', {
+    fetch(`http://localhost:8080/api/entries/add/${userId}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
             journalEntry: journalEntry,
-            dayRating: rating,
+            dayRating: rating
         }),
     })
-        .then((response) => response.json())
+        .then((response) => response.status)
         .then((data) => {
-             console.log("Response from server:", data);
-            // Assuming the API responds with the saved journal entry data
-            const savedJournalEntry = data.journalEntry;
-            const savedRating = data.rating;
+            console.log("Response from server:", data);
+            console.log(journalEntry);
+            console.log(rating);
+//             const savedJournalEntry = data.journalEntry;
+//             const savedRating = data.rating;
 
-            // Create a card for the saved journal entry
-            createEntryCard(savedJournalEntry, savedRating);
 
-            // Clear the form inputs
-            document.getElementById('journal-entry').value = '';
-            document.getElementById('entry-rating').value = '';
+            createEntryCard(journalEntry, rating);
+
+            
+//             document.getElementById('journal-entry').value = '';
+//             document.getElementById('entry-rating').value = '';
         })
         .catch((error) => {
             console.error('Error:', error);
