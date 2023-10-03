@@ -48,7 +48,7 @@ public class EmotionsServiceImpl implements EmotionsService {
     public void addEmotionsToEntry(Long entryId,emotionsDto emotionsDto) {
         Optional<entries> entryOptional = entryRepository.findById(entryId);
         emotions emotion = new emotions(emotionsDto);
-        entryOptional.ifPresent(emotion::setEntry);
+        entryOptional.ifPresent(emotion::setEntries);
         emotionsRepository.saveAndFlush(emotion);
     }
 

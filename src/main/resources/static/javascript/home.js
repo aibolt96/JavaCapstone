@@ -9,6 +9,7 @@ function createEntryCard(entryId, journalEntry, rating) {
     card.classList.add('entry-card');
     card.setAttribute('data-entry-id', entryId)
 
+
     const entryText = document.createElement('p');
     entryText.textContent = `Journal Entry: ${journalEntry}`;
 
@@ -25,6 +26,7 @@ function createEntryCard(entryId, journalEntry, rating) {
 
     const updateButton = document.createElement('button');
     updateButton.textContent = 'Update';
+
     updateButton.addEventListener('click', function () {
         const mood = moodInput.value;
         const moodReason = moodReasonInput.value;
@@ -45,22 +47,24 @@ function createEntryCard(entryId, journalEntry, rating) {
             }),
         })
         .then((response) => {
-            if (response.ok) {
-                return response.json();
-            } else {
+            if (!response.ok) {
                 throw new Error('Failed to add emotions to the entry');
             }
         })
         .then((data) => {
-
             const moodText = document.createElement('p');
             moodText.textContent = `Mood: ${mood}`;
 
             const moodReasonText = document.createElement('p');
             moodReasonText.textContent = `Mood Reason: ${moodReason}`;
 
+            const spacer = document.createElement('div');
+            spacer.style.marginTop = '15px';
+
+            card.appendChild(spacer);
             card.appendChild(moodText);
             card.appendChild(moodReasonText);
+
         })
         .catch((error) => {
             console.error('Error:', error);
@@ -72,13 +76,51 @@ function createEntryCard(entryId, journalEntry, rating) {
         moodReasonInput.value = '';
     });
 
+      // Create the "Delete" button
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Delete';
+
+      deleteButton.addEventListener('click', function () {
+          // Prompt the user for confirmation before deleting
+          const confirmDelete = confirm('Are you sure you want to delete this entry?');
+          if (confirmDelete) {
+              deleteEntry(entryId); // Call the deleteEntry function
+          }
+      });
+
     card.appendChild(entryText);
     card.appendChild(entryRating);
     card.appendChild(moodInput);
     card.appendChild(moodReasonInput);
     card.appendChild(updateButton);
+    card.appendChild(deleteButton);
 
-    entryList.appendChild(card);
+    entryList.insertBefore(card, entryList.firstChild);
+
+    const contentHeight = card.scrollHeight;
+        card.style.height = `${contentHeight}px`;
+}
+
+function deleteEntry(entryId) {
+    fetch(`/api/entries/${entryId}`, {
+        method: 'DELETE',
+    })
+    .then((response) => {
+        if (!response.ok) {
+            throw new Error('Failed to delete entry');
+        }
+    })
+    .then(() => {
+        // Entry deleted successfully, you can remove the card from the UI
+        const cardToRemove = document.querySelector(`[data-entry-id="${entryId}"]`);
+        if (cardToRemove) {
+            cardToRemove.remove();
+        }
+    })
+    .catch((error) => {
+        console.error('Error:', error);
+        alert('An error occurred while deleting the entry.');
+    });
 }
 
 
@@ -108,18 +150,14 @@ journalForm.addEventListener('submit', function (e) {
             dayRating: rating
         }),
     })
-        .then((response) => response.status)
+        .then((response) => response.json())
         .then((data) => {
             console.log("Response from server:", data);
             console.log(journalEntry);
             console.log(rating);
-//             const savedJournalEntry = data.journalEntry;
-//             const savedRating = data.rating;
-
 
             createEntryCard(data.entryId, journalEntry, rating);
 
-            
             document.getElementById('journal-entry').value = '';
             document.getElementById('entry-rating').value = '';
         })

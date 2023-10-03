@@ -17,9 +17,10 @@ public class EntriesController {
     private EntryServiceImpl entryService;
 
     @PostMapping("/add/{userId}")
-    public void addEntry(@RequestBody entriesDto entryDto, @PathVariable Long userId) {
+    public entries addEntry(@RequestBody entriesDto entryDto, @PathVariable Long userId) {
         System.out.println(entryDto);
-        entryService.addEntry(entryDto, userId);
+        return entryService.addEntry(entryDto, userId);
+
     }
 
     @DeleteMapping("/{entryId}")

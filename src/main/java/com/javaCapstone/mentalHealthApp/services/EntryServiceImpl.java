@@ -6,6 +6,7 @@ import com.javaCapstone.mentalHealthApp.dto.entriesDto;
 import com.javaCapstone.mentalHealthApp.entities.emotions;
 import com.javaCapstone.mentalHealthApp.entities.entries;
 import com.javaCapstone.mentalHealthApp.entities.user;
+import com.javaCapstone.mentalHealthApp.repositories.EmotionsRepository;
 import com.javaCapstone.mentalHealthApp.repositories.EntryRepository;
 import com.javaCapstone.mentalHealthApp.repositories.UserRepository;
 import jakarta.transaction.Transactional;
@@ -23,29 +24,21 @@ public class EntryServiceImpl implements EntryService {
     private EntryRepository entryRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private EmotionsRepository emotionsRepository;
 
 
     @Override
-    public void addEntry(entriesDto entryDto, Long userId) {
+    public entries addEntry(entriesDto entryDto, Long userId) {
         System.out.println(entryDto);
         Optional<user> userOptional = userRepository.findById(userId);
         entries entry = new entries(entryDto);
         userOptional.ifPresent(entry::setUser);
 
         entryRepository.saveAndFlush(entry);
+        return entry;
     }
-
-    @Override
-    @Transactional
-    public void deleteEntryById(Long entryId){
-        Optional<entries> entryOptional = entryRepository.findById(entriesDto.getEntryId());
-        entryOptional.ifPresent(entry -> {
-            entry.setJournalEntry(entriesDto.getJournalEntry());
-
-            entry.getEmotionsSet().clear();
-            entryRepository.delete(entry);
-        });
-    }
+    
 
     @Override
     @Transactional
@@ -80,5 +73,10 @@ public class EntryServiceImpl implements EntryService {
     @Transactional
     public List<entries> getAllEntries() {
         return entryRepository.findAll();
+    }
+
+    @Override
+    public void deleteEntryById(Long entryId) {
+
     }
 }

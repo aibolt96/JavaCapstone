@@ -10,11 +10,8 @@ import java.util.Set;
 
 public interface EntryService {
     @Transactional
-    void addEntry(entriesDto entryDto, Long userId);
+    entries addEntry(entriesDto entryDto, Long userId);
 
-
-    @Transactional
-    void deleteEntryById(Long entryId);
 
     @Transactional
     void updateEntryDayRating(Long entryId, Integer newDayRating, Set<emotionsDto> emotionsDtoSet);
@@ -24,4 +21,6 @@ public interface EntryService {
 
     @Transactional
     List<entries> getAllEntries();
+
+    void deleteEntryById(Long entryId);
 }
