@@ -11,10 +11,10 @@ function createEntryCard(entryId, journalEntry, rating) {
 
 
     const entryText = document.createElement('p');
-    entryText.textContent = `Journal Entry: ${journalEntry}`;
+    entryText.textContent = `${journalEntry}`;
 
     const entryRating = document.createElement('p');
-    entryRating.textContent = `Rating: ${rating}`;
+    entryRating.textContent = `${rating}/5`;
 
     const moodInput = document.createElement('input');
     moodInput.type = 'text';
@@ -79,6 +79,9 @@ function createEntryCard(entryId, journalEntry, rating) {
       // Create the "Delete" button
         const deleteButton = document.createElement('button');
         deleteButton.textContent = 'Delete';
+        deleteButton.style.position = 'absolute';
+        deleteButton.style.top = '10px';
+        deleteButton.style.right = '10px';
 
       deleteButton.addEventListener('click', function () {
           // Prompt the user for confirmation before deleting
@@ -88,7 +91,19 @@ function createEntryCard(entryId, journalEntry, rating) {
           }
       });
 
+      const entryLabel = document.createElement('p');
+          entryLabel.textContent = 'Journal Entry:';
+          entryLabel.style.textAlign = 'center';
+          entryLabel.style.fontWeight = 'bold';
+
+      const ratingLabel = document.createElement('p');
+          ratingLabel.textContent = 'Day Rating:';
+          ratingLabel.style.textAlign = 'center';
+          ratingLabel.style.fontWeight = 'bold';
+
+    card.appendChild(entryLabel);
     card.appendChild(entryText);
+    card.appendChild(ratingLabel)
     card.appendChild(entryRating);
     card.appendChild(moodInput);
     card.appendChild(moodReasonInput);
